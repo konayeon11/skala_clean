@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run: preprocess_user_behavior.py",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/preprocess_user_behavior.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--input",
+        "17. CSV → Pandas → PostgreSQL 적재 실습_user_behavior.csv",
+        "--output",
+        "user_behavior_enriched.csv",
+        "--k",
+        "5"
+      ]
+    }
+  ]
+}

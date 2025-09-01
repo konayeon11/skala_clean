@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>도서 검색</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>도서 검색</h1>
+
+  <div class="search-area">
+    <input type="text" id="searchInput" placeholder="제목 또는 저자명으로 검색" />
+    <button id="searchBtn">검색</button>
+  </div>
+
+  <div class="output" id="searchResults"></div>
+
+  <button onclick="location.href='index.html'">메인으로 돌아가기</button>
+
+  <script>
+    // 예시 도서 데이터 (실제로는 서버 또는 로컬스토리지에서 불러옴)
+    const books = [
+      { title: "자바스크립트 완벽 가이드", author: "David Flanagan" },
+      { title: "돈의 심리학", author: "모건 하우절" },
+      { title: "불편한 편의점", author: "김호연" }
+    ];
+
+    document.getElementById('searchBtn').addEventListener('click', () => {
+      const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
+      const results = books.filter(book =>
+        book.title.toLowerCase().includes(keyword) || book.author.toLowerCase().includes(keyword)
+      );
+
+      const resultDiv = document.getElementById('searchResults');
+      if(results.length === 0) {
+        resultDiv.innerHTML = "<p>검색 결과가 없습니다.</p>";
+        return;
+      }
+
+      resultDiv.innerHTML = "<h2>검색 결과</h2>";
+      results.forEach(book => {
+        const div = document.createElement('div');
+        div.innerHTML = `<strong>제목:</strong> ${book.title} / <strong>저자:</strong> ${book.author}`;
+        resultDiv.appendChild(div);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    const books = [
+    {
+        title: "자바스크립트 완벽 가이드",
+        author: "David Flanagan",
+        price: 35000,
+        stock: 5,
+        category: "프로그래밍"
+    },
+    {
+        title: "모던 자바스크립트 Deep Dive",
+        author: "이웅모",
+        price: 40000,
+        stock: 0,
+        category: "프로그래밍"
+    },
+    {
+        title: "돈의 심리학",
+        author: "모건 하우절",
+        price: 18000,
+        stock: 3,
+        category: "경제"
+    },
+    {
+        title: "불편한 편의점",
+        author: "김호연",
+        price: 14500,
+        stock: 2,
+        category: "소설"
+    }
+    ];
+
+    //1. for 반복문을 사용하여 모든 도서 제목을 출력하는 스크립트를 반영해 보세요.
+    for (let i = 0; i < books.length; i++){
+        console.log(books[i].title);
+    }
+
+    //2. for....of 를 사용하여 재고가 1권 이상인 도서만 출력하는 스크립트를 반영해 보세요.
+    for (const book of books) {
+        if (book.stock >= 1) {
+            console.log(book.title);
+        }
+    }
+
+    //forEach + 조건문을 사용하여 "프로그래밍" 카테고리만 출력하는 스크립트를 반영해 보세요.
+    books.forEach(book => {
+        if (book.category === "프로그래밍") {
+            console.log(book.title);
+        }
+    });
+
+    //for...of 를 사용하여 도서 전체 가격의 평균을 구하는 스크립트를 반영해 보세요.
+    let totalPrice = 0;
+    let bookCount = 0;
+
+    for (const book of books) {
+    totalPrice += book.price;
+    bookCount++;
+    }
+
+    const averagePrice = totalPrice / bookCount;
+    console.log(`도서 가격 평균: ${averagePrice.toFixed(2)}원`);
+
+    //재고가 0인 책의 재고를 10권 추가하는 스크립트를 반영해 보세요.
+    for (const book of books) {
+        if (book.stock === 0) {
+            book.stock = 10;
+        }
+    }
+
+    console.log(books);
+
+    </script>
+
+
+</body>
+</html>

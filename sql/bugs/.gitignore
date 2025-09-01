@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node.js
+node_modules/
+dist/
+build/
+
+# IDE / OS
+.vscode/
+.idea/
+*.log
+.DS_Store
+
+# Postgres local data
+sql/ai-embedding-tx-lab/pgdata/
+.env

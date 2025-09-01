@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3열 */
+      grid-template-rows: repeat(2, 150px); /* 2행, 높이 150px */
+      gap: 10px; /* 격자 사이 간격 */
+      width: 600px;
+      margin: 20px auto;
+      border: 1px solid gray;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .item {
+      background-color: #8ac6d1;
+      border: 2px solid gray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .text-center {
+    text-align: center;
+    }
+
+    .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px; /* 좌우 여백 보정 */
+    }
+
+    .col {
+    flex: 1;
+    padding: 10px;
+    background-color: #8ac6d1;
+    border: 2px solid gray;
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+    box-sizing: border-box;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">1 of 2</div>
+            <div class="col">2 of 2</div>
+        </div>
+    </div>
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">1 of 3</div>
+            <div class="col">2 of 3</div>
+            <div class="col">3 of 3</div>
+        </div>
+    </div>
+
+</body>
+</html>

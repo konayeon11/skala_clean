@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3열 */
+      grid-template-rows: repeat(2, 150px); /* 2행, 높이 150px */
+      gap: 10px; /* 격자 사이 간격 */
+      width: 600px;
+      margin: 20px auto;
+      border: 1px solid gray;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .item {
+      background-color: #8ac6d1;
+      border: 2px solid gray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+    <div class="item">5</div>
+    <div class="item">6</div>
+  </div>
+
+</body>
+</html>

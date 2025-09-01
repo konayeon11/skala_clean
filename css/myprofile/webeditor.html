@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>간단한 웹 에디터</title>
+
+    <style>
+    #resultHtml {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      white-space: pre-wrap;
+    }
+    #boldText {
+      margin-top: 10px;
+    }
+  </style>
+
+</head>
+<body>
+
+<h1>심플 웹 에디터</h1>
+
+  <div><button onclick="makeBold()">굵게</button></div>
+  <input type="text" id="inputText" placeholder="문장을 입력하세요" size="100">
+
+  <p id="boldText"></p>
+  <div id="resultHtml"></div>
+
+  <script>
+    function makeBold() {
+      const input = document.getElementById('inputText').value;
+      const boldTextElement = document.getElementById('boldText');
+
+      // 결과 HTML 출력
+      const resultHtml = boldTextElement.outerHTML;
+      document.getElementById('resultHtml').textContent = resultHtml;
+    }
+  </script>
+
+</body>
+</html>

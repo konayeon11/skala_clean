@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Grid 완전 가이드</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: #f8f9fa;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 30px;
+        font-size: 2.5em;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      h2 {
+        color: #34495e;
+        margin: 30px 0 15px 0;
+        padding: 15px;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border-radius: 8px;
+        font-size: 1.4em;
+      }
+
+      h3 {
+        color: #7f8c8d;
+        margin: 20px 0 10px 0;
+        font-size: 1.1em;
+      }
+
+      .demo-section {
+        background: white;
+        margin-bottom: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .demo-container {
+        border: 3px dashed #e74c3c;
+        margin: 20px;
+        padding: 20px;
+        background: #fafafa;
+        border-radius: 8px;
+      }
+
+      .grid-item {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 6px;
+        text-align: center;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 60px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .grid-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .code-snippet {
+        background: #2c3e50;
+        color: #ecf0f1;
+        padding: 15px;
+        margin: 10px 20px;
+        border-radius: 8px;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        overflow-x: auto;
+        border-left: 4px solid #3498db;
+      }
+
+      /* Grid 기본 예제들 */
+      .basic-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 15px;
+      }
+
+      .columns-demo-1 {
+        display: grid;
+        grid-template-columns: 100px 200px 1fr;
+        gap: 15px;
+      }
+
+      .columns-demo-2 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+      }
+
+      .columns-demo-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      .rows-demo {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 100px 150px 80px;
+        gap: 15px;
+      }
+
+      .areas-demo {
+        display: grid;
+        grid-template-columns: 200px 1fr 150px;
+        grid-template-rows: 80px 1fr 60px;
+        grid-template-areas:
+          "header header header"
+          "sidebar main aside"
+          "footer footer footer";
+        gap: 15px;
+        height: 400px;
+      }
+
+      .area-header {
+        grid-area: header;
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      }
+      .area-sidebar {
+        grid-area: sidebar;
+        background: linear-gradient(135deg, #4ecdc4, #44a08d);
+      }
+      .area-main {
+        grid-area: main;
+        background: linear-gradient(135deg, #45b7d1, #96c93d);
+      }
+      .area-aside {
+        grid-area: aside;
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+      }
+      .area-footer {
+        grid-area: footer;
+        background: linear-gradient(135deg, #fda085, #f6d365);
+      }
+
+      .positioning-demo {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 100px);
+        gap: 10px;
+      }
+
+      .item-span-2-cols {
+        grid-column: span 2;
+      }
+      .item-span-2-rows {
+        grid-row: span 2;
+      }
+      .item-specific {
+        grid-column: 2 / 4;
+        grid-row: 2 / 3;
+      }
+
+      .auto-fit-demo {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      .auto-fill-demo {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      /* 실제 레이아웃 예제들 */
+      .holy-grail {
+        display: grid;
+        grid-template-columns: 200px 1fr 150px;
+        grid-template-rows: 80px 1fr 60px;
+        grid-template-areas:
+          "header header header"
+          "nav main aside"
+          "footer footer footer";
+        gap: 15px;
+        height: 500px;
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+      }
+
+      .magazine-layout {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(4, 150px);
+        gap: 15px;
+      }
+
+      .magazine-1 {
+        grid-column: 1 / 4;
+        grid-row: 1 / 3;
+      }
+      .magazine-2 {
+        grid-column: 4 / 7;
+        grid-row: 1 / 2;
+      }
+      .magazine-3 {
+        grid-column: 4 / 5;
+        grid-row: 2 / 4;
+      }
+      .magazine-4 {
+        grid-column: 5 / 7;
+        grid-row: 2 / 3;
+      }
+      .magazine-5 {
+        grid-column: 5 / 7;
+        grid-row: 3 / 4;
+      }
+      .magazine-6 {
+        grid-column: 1 / 3;
+        grid-row: 3 / 5;
+      }
+      .magazine-7 {
+        grid-column: 3 / 5;
+        grid-row: 3 / 4;
+      }
+      .magazine-8 {
+        grid-column: 3 / 7;
+        grid-row: 4 / 5;
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        font-weight: bold;
+      }
+
+      .card-body {
+        padding: 20px;
+        color: #333;
+      }
+
+      /* 인터랙티브 컨트롤 */
+      .controls {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        padding: 25px;
+        margin: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .control-group {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .control-group label {
+        font-weight: bold;
+        min-width: 140px;
+        color: white;
+      }
+
+      .control-group select,
+      .control-group input {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        background: white;
+        color: #333;
+        font-size: 14px;
+      }
+
+      .control-group input[type="range"] {
+        width: 150px;
+      }
+
+      .interactive-grid {
+        display: grid;
+        gap: 15px;
+        transition: all 0.3s ease;
+        min-height: 300px;
+      }
+
+      /* 다양한 색상 아이템들 */
+      .item-1 {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .item-2 {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
+      .item-3 {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      }
+      .item-4 {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      }
+      .item-5 {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      }
+      .item-6 {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      }
+      .item-7 {
+        background: linear-gradient(135deg, #4ecdc4, #44a08d);
+      }
+      .item-8 {
+        background: linear-gradient(135deg, #45b7d1, #96c93d);
+      }
+      .item-9 {
+        background: linear-gradient(135deg, #fda085, #f6d365);
+      }
+
+      .responsive-note {
+        background: #e8f5e8;
+        color: #2d5a2d;
+        padding: 15px;
+        margin: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #27ae60;
+        font-style: italic;
+      }
+
+      .footer-section {
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+        color: white;
+        text-align: center;
+        padding: 30px;
+        margin-top: 40px;
+        border-radius: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎯 CSS Grid 완전 마스터 가이드</h1>
+
+      <!-- 기본 Grid -->
+      <div class="demo-section">
+        <h2>1. 기본 CSS Grid</h2>
+        <div class="code-snippet">
+          display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;
+        </div>
+        <div class="demo-container basic-grid">
+          <div class="grid-item">Item 1</div>
+          <div class="grid-item">Item 2</div>
+          <div class="grid-item">Item 3</div>
+          <div class="grid-item">Item 4</div>
+          <div class="grid-item">Item 5</div>
+          <div class="grid-item">Item 6</div>
+        </div>
+      </div>
+
+      <!-- Grid Template Columns -->
+      <div class="demo-section">
+        <h2>2. Grid Template Columns</h2>
+
+        <h3>고정 크기와 유연한 크기 조합</h3>
+        <div class="code-snippet">grid-template-columns: 100px 200px 1fr;</div>
+        <div class="demo-container columns-demo-1">
+          <div class="grid-item">100px</div>
+          <div class="grid-item">200px</div>
+          <div class="grid-item">1fr (남은공간)</div>
+        </div>
+
+        <h3>Repeat 함수 사용</h3>
+        <div class="code-snippet">grid-template-columns: repeat(4, 1fr);</div>
+        <div class="demo-container columns-demo-2">
+          <div class="grid-item">1</div>
+          <div class="grid-item">2</div>
+          <div class="grid-item">3</div>
+          <div class="grid-item">4</div>
+        </div>
+
+        <h3>MinMax 함수 사용</h3>
+        <div class="code-snippet">
+          grid-template-columns: repeat(3, minmax(200px, 1fr));
+        </div>
+        <div class="demo-container columns-demo-3">
+          <div class="grid-item">최소 200px</div>
+          <div class="grid-item">최소 200px</div>
+          <div class="grid-item">최소 200px</div>
+        </div>
+      </div>
+
+      <!-- Grid Template Rows -->
+      <div class="demo-section">
+        <h2>3. Grid Template Rows</h2>
+        <div class="code-snippet">
+          grid-template-columns: repeat(3, 1fr); grid-template-rows: 100px 150px
+          80px;
+        </div>
+        <div class="demo-container rows-demo">
+          <div class="grid-item">100px 높이</div>
+          <div class="grid-item">150px 높이</div>
+          <div class="grid-item">80px 높이</div>
+          <div class="grid-item">Row 2</div>
+          <div class="grid-item">Row 2</div>
+          <div class="grid-item">Row 2</div>
+          <div class="grid-item">Row 3</div>
+          <div class="grid-item">Row 3</div>
+          <div class="grid-item">Row 3</div>
+        </div>
+      </div>
+
+      <!-- Grid Areas -->
+      <div class="demo-section">
+        <h2>4. Grid Template Areas</h2>
+        <div class="code-snippet">
+          grid-template-areas: "header header header" "sidebar main aside"
+          "footer footer footer";
+        </div>
+        <div class="demo-container areas-demo">
+          <div class="grid-item area-header">Header</div>
+          <div class="grid-item area-sidebar">Sidebar</div>
+          <div class="grid-item area-main">Main Content</div>
+          <div class="grid-item area-aside">Aside</div>
+          <div class="grid-item area-footer">Footer</div>
+        </div>
+      </div>
+
+      <!-- Grid Item 배치 -->
+      <div class="demo-section">
+        <h2>5. Grid Item 배치</h2>
+        <div class="code-snippet">
+          grid-column: span 2; /* 2열 차지 */ grid-row: span 2; /* 2행 차지 */
+          grid-column: 2 / 4; /* 2번째에서 4번째 라인까지 */
+        </div>
+        <div class="demo-container positioning-demo">
+          <div class="grid-item">1</div>
+          <div class="grid-item item-span-2-cols">2 (2열 차지)</div>
+          <div class="grid-item">3</div>
+          <div class="grid-item item-span-2-rows">4 (2행 차지)</div>
+          <div class="grid-item item-specific">5 (특정 위치)</div>
+          <div class="grid-item">6</div>
+          <div class="grid-item">7</div>
+          <div class="grid-item">8</div>
+          <div class="grid-item">9</div>
+        </div>
+      </div>
+
+      <!-- Auto-fit vs Auto-fill -->
+      <div class="demo-section">
+        <h2>6. Auto-fit vs Auto-fill</h2>
+
+        <h3>Auto-fit (아이템에 맞춰 크기 조정)</h3>
+        <div class="code-snippet">
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        </div>
+        <div class="demo-container auto-fit-demo">
+          <div class="grid-item item-1">Auto-fit 1</div>
+          <div class="grid-item item-2">Auto-fit 2</div>
+          <div class="grid-item item-3">Auto-fit 3</div>
+        </div>
+
+        <h3>Auto-fill (빈 공간도 열로 유지)</h3>
+        <div class="code-snippet">
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        </div>
+        <div class="demo-container auto-fill-demo">
+          <div class="grid-item item-4">Auto-fill 1</div>
+          <div class="grid-item item-5">Auto-fill 2</div>
+          <div class="grid-item item-6">Auto-fill 3</div>
+        </div>
+      </div>
+
+      <!-- 실제 레이아웃 예제 -->
+      <div class="demo-section">
+        <h2>7. 실제 레이아웃 예제</h2>
+
+        <h3>📱 Holy Grail 레이아웃</h3>
+        <div class="code-snippet">
+          display: grid; grid-template-columns: 200px 1fr 150px;
+          grid-template-rows: 80px 1fr 60px; grid-template-areas: "header header
+          header" "nav main aside" "footer footer footer";
+        </div>
+        <div class="holy-grail">
+          <div class="grid-item area-header">Header</div>
+          <div class="grid-item area-sidebar">Navigation</div>
+          <div class="grid-item area-main">Main Content Area</div>
+          <div class="grid-item area-aside">Sidebar</div>
+          <div class="grid-item area-footer">Footer</div>
+        </div>
+
+        <h3>📰 매거진 레이아웃</h3>
+        <div class="code-snippet">
+          grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(4,
+          150px); /* 각 아이템별로 grid-column, grid-row 지정 */
+        </div>
+        <div class="demo-container magazine-layout">
+          <div class="grid-item magazine-1">대형 기사</div>
+          <div class="grid-item magazine-2">헤드라인</div>
+          <div class="grid-item magazine-3">세로 광고</div>
+          <div class="grid-item magazine-4">뉴스 1</div>
+          <div class="grid-item magazine-5">뉴스 2</div>
+          <div class="grid-item magazine-6">특집 기사</div>
+          <div class="grid-item magazine-7">스포츠</div>
+          <div class="grid-item magazine-8">하단 광고</div>
+        </div>
+      </div>
+
+      <!-- 반응형 카드 그리드 -->
+      <div class="demo-section">
+        <h2>8. 반응형 카드 그리드</h2>
+        <div class="code-snippet">
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:
+          20px;
+        </div>
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-header">카드 1</div>
+            <div class="card-body">
+              Auto-fit을 사용한 반응형 카드 레이아웃입니다. 화면 크기에 따라
+              자동으로 열 개수가 조정됩니다.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">카드 2</div>
+            <div class="card-body">
+              최소 300px 너비를 보장하면서, 사용 가능한 공간을 균등하게
+              분배합니다.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">카드 3</div>
+            <div class="card-body">
+              미디어 쿼리 없이도 완벽한 반응형 레이아웃을 구현할 수 있습니다.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">카드 4</div>
+            <div class="card-body">
+              CSS Grid의 강력한 기능을 활용한 실용적인 예제입니다.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 인터랙티브 Grid 실습 -->
+      <div class="demo-section">
+        <h2>9. 🎮 인터랙티브 Grid 실습</h2>
+        <div class="controls">
+          <div class="control-group">
+            <label for="columns">Columns:</label>
+            <select id="columns" onchange="updateGrid()">
+              <option value="repeat(3, 1fr)">repeat(3, 1fr)</option>
+              <option value="repeat(4, 1fr)">repeat(4, 1fr)</option>
+              <option value="100px 1fr 100px">100px 1fr 100px</option>
+              <option value="repeat(auto-fit, minmax(150px, 1fr))">
+                auto-fit minmax(150px, 1fr)
+              </option>
+              <option value="repeat(auto-fill, minmax(150px, 1fr))">
+                auto-fill minmax(150px, 1fr)
+              </option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="rows">Rows:</label>
+            <select id="rows" onchange="updateGrid()">
+              <option value="auto">auto</option>
+              <option value="repeat(3, 100px)">repeat(3, 100px)</option>
+              <option value="100px 1fr 80px">100px 1fr 80px</option>
+              <option value="repeat(2, minmax(100px, auto))">
+                repeat(2, minmax(100px, auto))
+              </option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="gap-size">Gap:</label>
+            <input
+              type="range"
+              id="gap-size"
+              min="0"
+              max="50"
+              value="15"
+              onchange="updateGrid()"
+            />
+            <span id="gap-display">15px</span>
+          </div>
+
+          <div class="control-group">
+            <label for="height">Height:</label>
+            <input
+              type="range"
+              id="height"
+              min="200"
+              max="500"
+              value="300"
+              onchange="updateGrid()"
+            />
+            <span id="height-display">300px</span>
+          </div>
+        </div>
+
+        <div class="demo-container">
+          <div class="interactive-grid" id="interactive-grid">
+            <div class="grid-item item-1">1</div>
+            <div class="grid-item item-2">2</div>
+            <div class="grid-item item-3">3</div>
+            <div class="grid-item item-4">4</div>
+            <div class="grid-item item-5">5</div>
+            <div class="grid-item item-6">6</div>
+            <div class="grid-item item-7">7</div>
+            <div class="grid-item item-8">8</div>
+            <div class="grid-item item-9">9</div>
+          </div>
+        </div>
+
+        <div class="code-snippet" id="current-grid-code">
+          display: grid; grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: auto; gap: 15px; height: 300px;
+        </div>
+      </div>
+
+      <!-- 고급 Grid 기능 -->
+      <div class="demo-section">
+        <h2>10. 고급 Grid 기능</h2>
+
+        <h3>📐 Grid Line 이름 지정</h3>
+        <div class="code-snippet">
+          grid-template-columns: [start] 250px [content-start] 1fr [content-end]
+          250px [end]; grid-column: content-start / content-end;
+        </div>
+
+        <h3>🔄 Grid Auto Flow</h3>
+        <div class="code-snippet">
+          grid-auto-flow: row; /* 기본값 */ grid-auto-flow: column; /* 열 우선
+          */ grid-auto-flow: dense; /* 빈 공간 채우기 */
+        </div>
+
+        <h3>📏 Grid Auto Columns/Rows</h3>
+        <div class="code-snippet">
+          grid-auto-columns: 200px; grid-auto-rows: minmax(100px, auto);
+        </div>
+      </div>
+
+      <div class="responsive-note">
+        💡 <strong>반응형 팁:</strong> CSS Grid는 미디어 쿼리 없이도
+        auto-fit/auto-fill과 minmax()를 조합하여 완벽한 반응형 레이아웃을 구현할
+        수 있습니다. Flexbox와 함께 사용하면 더욱 강력한 레이아웃 시스템을 만들
+        수 있어요!
+      </div>
+
+      <div class="footer-section">
+        <h2>🎉 CSS Grid 마스터 완료!</h2>
+        <p>이제 어떤 복잡한 레이아웃도 Grid로 자유자재로 구현할 수 있습니다.</p>
+        <p>Flexbox와 Grid를 조합하면 무적의 레이아웃 시스템이 완성됩니다! 💪</p>
+      </div>
+    </div>
+
+    <script>
+      function updateGrid() {
+        const grid = document.getElementById("interactive-grid");
+        const codeDisplay = document.getElementById("current-grid-code");
+        const gapDisplay = document.getElementById("gap-display");
+        const heightDisplay = document.getElementById("height-display");
+
+        const columns = document.getElementById("columns").value;
+        const rows = document.getElementById("rows").value;
+        const gap = document.getElementById("gap-size").value;
+        const height = document.getElementById("height").value;
+
+        // 스타일 적용
+        grid.style.gridTemplateColumns = columns;
+        grid.style.gridTemplateRows = rows;
+        grid.style.gap = gap + "px";
+        grid.style.height = height + "px";
+
+        // 디스플레이 업데이트
+        gapDisplay.textContent = gap + "px";
+        heightDisplay.textContent = height + "px";
+
+        // 코드 표시 업데이트
+        codeDisplay.textContent = `display: grid;
+grid-template-columns: ${columns};
+grid-template-rows: ${rows};
+gap: ${gap}px;
+height: ${height}px;`;
+      }
+
+      // 페이지 로드 시 초기화
+      document.addEventListener("DOMContentLoaded", function () {
+        updateGrid();
+
+        // 호버 효과 추가
+        const gridItems = document.querySelectorAll(".grid-item");
+        gridItems.forEach((item) => {
+          item.addEventListener("mouseenter", function () {
+            this.style.transform = "scale(1.05)";
+          });
+
+          item.addEventListener("mouseleave", function () {
+            this.style.transform = "scale(1)";
+          });
+        });
+      });
+
+      // 키보드 단축키로 데모 변경
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowLeft") {
+          const select = document.getElementById("columns");
+          const currentIndex = select.selectedIndex;
+          if (currentIndex > 0) {
+            select.selectedIndex = currentIndex - 1;
+            updateGrid();
+          }
+        } else if (e.key === "ArrowRight") {
+          const select = document.getElementById("columns");
+          const currentIndex = select.selectedIndex;
+          if (currentIndex < select.options.length - 1) {
+            select.selectedIndex = currentIndex + 1;
+            updateGrid();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

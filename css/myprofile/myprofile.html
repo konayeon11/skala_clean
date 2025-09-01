@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Semantic HTML - Nayeon's Webpage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100..900&display=swap" rel="stylesheet">
+  <link href="mycss.css" rel="stylesheet" />
+  
+</head>
+<body>
+
+  <header>
+    <h1>🍀about me🍀</h1>
+  </header>
+
+  <main>
+    <div class="flex-row">
+      <article class="box">
+        <h2>Profile</h2>
+        <img src="Firefly_A realistic-style hamster sitting at a desk, coding on a laptop, surrounded by stacks 361626.jpg" alt="코딩하는 햄스터 이미지" class="profile-img" />
+        <p><strong>Name:</strong> Ko Nayeon</p>
+        <p><strong>Age:</strong> 22</p>
+        <p><strong>Major:</strong> Information Statistics📏, Library Information Science📚</p>
+        <p><strong>Hobby:</strong> Knitting🧶, Yoga🌺</p>
+      </article>
+
+      <article class="box">
+        <h2>Programming Skills & Completion</h2>
+        <h3>Available Programming Languages🖥️</h3>
+        <ul>
+          <li>Python</li>
+          <li>C++</li>
+          <li>Java</li>
+          <li>JavaScript</li>
+          <li>HTML</li>
+          <li>R</li>
+        </ul>
+        <h3>Completed Courses✔️</h3>
+        <ul>
+          <li>SKADA Intermediate Class</li>
+          <li>BDA 7th Batch Data Analysis and Modeling Class</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="flex-row">
+      <section class="box">
+        <h2>Links🔗</h2>
+        <p>Click the buttons below to visit GitHub and the projects.</p>
+        <div class="link-buttons">
+          <a href="https://github.com/konayeon11/skala.git" target="_blank">GitHub & projects</a>
+          <a href="https://drive.google.com/drive/folders/1vlrbZ_nS4d7pT4NNdDYYdhN5aKc62Ewc?usp=sharing" target="_blank" class="success">projects</a>
+        </div>
+      </section>
+
+      <aside class="box">
+        <h2>video📺</h2>
+        <div class="video-wrapper">
+          <iframe 
+            src="https://www.youtube.com/embed/kLxIyVfVAt8?si=GtEZAOkeg0Zq77Sp"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <h2>audio🎧</h2>
+        <audio controls>
+          <source src="your-audio-file.mp3" type="audio/mpeg">
+        </audio>
+      </aside>
+    </div>
+
+    <section>
+      <h2>contact📩</h2>
+      <form action="#" method="post">
+        <label for="name">name</label>
+        <input type="text" id="name" name="name" placeholder="yourname" required>
+
+        <label for="email">email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+        <label for="message">content</label>
+        <textarea id="message" name="message" rows="1" placeholder="..." required></textarea>
+
+        <button type="submit">send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Nayeon's Webpage. All rights reserved.</p>
+  </footer>
+</body>
+</html>

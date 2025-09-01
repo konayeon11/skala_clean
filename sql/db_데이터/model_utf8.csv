@@ -1,0 +1,5 @@
+model_id,model_name
+1,gpt-4
+2,mistral-7b
+3,llama-3
+4,gemini-1.5

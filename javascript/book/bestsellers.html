@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>작년도 베스트셀러</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>작년도 베스트셀러</h1>
+
+  <div id="bestsellers"></div>
+
+  <button onclick="location.href='index.html'">메인으로 돌아가기</button>
+
+  <script>
+    // 예시 베스트셀러 데이터
+    const books = JSON.parse(localStorage.getItem('books')) || [
+      { title: "역행자", author: "자청", price: 17500, stock: 10, category: "기타", bestseller: true, img: "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9788901272580.jpg" },
+      { title: "트렌드 코리아 2024", author: "김난도 외", price: 19800, stock: 10, category: "기타", bestseller: true, img: "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9788959897179.jpg" },
+      { title: "불편한 편의점 2", author: "김호연", price: 14500, stock: 5, category: "소설", bestseller: true, img: "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791161571188.jpg" },
+      { title: "세이노의 가르침", author: "세이노", price: 6480, stock: 20, category: "기타", bestseller: true, img: "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791168473690.jpg" },
+      { title: "도둑맞은 집중력", author: "요한 하리", price: 17820, stock: 8, category: "기타", bestseller: true, img: "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791167740984.jpg" }
+    ];
+
+    const bestsellers = books.filter(book => book.bestseller);
+    const div = document.getElementById('bestsellers');
+
+    if (bestsellers.length === 0) {
+      div.innerHTML = "<p>베스트셀러 도서가 없습니다.</p>";
+    } else {
+      bestsellers.forEach(book => {
+        const el = document.createElement('div');
+        el.innerHTML = `<strong>제목:</strong> ${book.title} / <strong>저자:</strong> ${book.author}`;
+        div.appendChild(el);
+      });
+    }
+  </script>
+</body>
+</html>

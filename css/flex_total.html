@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Flexbox 샘플 모음</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: #f5f5f5;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 30px;
+        font-size: 2.5em;
+      }
+
+      h2 {
+        color: #34495e;
+        margin: 30px 0 15px 0;
+        padding: 10px;
+        background: #ecf0f1;
+        border-left: 4px solid #3498db;
+      }
+
+      .demo-section {
+        background: white;
+        margin-bottom: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .demo-container {
+        border: 2px dashed #3498db;
+        margin: 20px;
+        padding: 20px;
+        min-height: 120px;
+        background: #f8f9fa;
+      }
+
+      .flex-item {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        margin: 5px;
+        border-radius: 6px;
+        text-align: center;
+        font-weight: bold;
+        min-width: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .code-snippet {
+        background: #2c3e50;
+        color: #ecf0f1;
+        padding: 15px;
+        margin: 10px 20px;
+        border-radius: 6px;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        overflow-x: auto;
+      }
+
+      /* 기본 Flexbox */
+      .basic-flex {
+        display: flex;
+      }
+
+      /* Direction 예제 */
+      .flex-row {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .flex-column {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .flex-row-reverse {
+        display: flex;
+        flex-direction: row-reverse;
+      }
+
+      /* Justify Content 예제 */
+      .justify-start {
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .justify-center {
+        display: flex;
+        justify-content: center;
+      }
+
+      .justify-end {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .justify-between {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .justify-around {
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .justify-evenly {
+        display: flex;
+        justify-content: space-evenly;
+      }
+
+      /* Align Items 예제 */
+      .align-start {
+        display: flex;
+        align-items: flex-start;
+        height: 120px;
+      }
+
+      .align-center {
+        display: flex;
+        align-items: center;
+        height: 120px;
+      }
+
+      .align-end {
+        display: flex;
+        align-items: flex-end;
+        height: 120px;
+      }
+
+      .align-stretch {
+        display: flex;
+        align-items: stretch;
+        height: 120px;
+      }
+
+      .align-baseline {
+        display: flex;
+        align-items: baseline;
+        height: 120px;
+      }
+
+      /* Flex Wrap 예제 */
+      .flex-wrap {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .flex-nowrap {
+        display: flex;
+        flex-wrap: nowrap;
+      }
+
+      /* Flex Properties 예제 */
+      .flex-grow-demo {
+        display: flex;
+      }
+
+      .grow-1 {
+        flex-grow: 1;
+      }
+      .grow-2 {
+        flex-grow: 2;
+      }
+      .grow-3 {
+        flex-grow: 3;
+      }
+
+      .flex-shrink-demo {
+        display: flex;
+        width: 300px;
+      }
+
+      .shrink-0 {
+        flex-shrink: 0;
+        width: 150px;
+      }
+      .shrink-1 {
+        flex-shrink: 1;
+        width: 150px;
+      }
+
+      /* 실제 레이아웃 예제 */
+      .header-layout {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: #34495e;
+        color: white;
+      }
+
+      .logo {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+
+      .nav {
+        display: flex;
+        list-style: none;
+        gap: 20px;
+      }
+
+      .nav a {
+        color: white;
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        transition: background 0.3s;
+      }
+
+      .nav a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .card-layout {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .card {
+        flex: 1 1 300px;
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e0e0e0;
+      }
+
+      .card h3 {
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      .footer-layout {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: #95a5a6;
+        color: white;
+        margin-top: 20px;
+      }
+
+      /* 반응형 예제 */
+      .responsive-flex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .responsive-item {
+        flex: 1 1 250px;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      /* 유틸리티 클래스 */
+      .gap-10 {
+        gap: 10px;
+      }
+      .gap-20 {
+        gap: 20px;
+      }
+      .gap-30 {
+        gap: 30px;
+      }
+
+      /* 인터랙티브 컨트롤 */
+      .controls {
+        padding: 20px;
+        background: #ecf0f1;
+        margin: 20px;
+        border-radius: 6px;
+      }
+
+      .control-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: inline-block;
+        width: 150px;
+        font-weight: bold;
+      }
+
+      select,
+      input[type="range"] {
+        padding: 5px;
+        border: 1px solid #bdc3c7;
+        border-radius: 4px;
+      }
+
+      .interactive-demo {
+        display: flex;
+        transition: all 0.3s ease;
+      }
+
+      /* 특별한 아이템들 */
+      .item-1 {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .item-2 {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
+      .item-3 {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      }
+      .item-4 {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      }
+      .item-5 {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎯 CSS Flexbox 완전 가이드</h1>
+
+      <!-- 기본 Flexbox -->
+      <div class="demo-section">
+        <h2>1. 기본 Flexbox</h2>
+        <div class="code-snippet">display: flex;</div>
+        <div class="demo-container basic-flex">
+          <div class="flex-item">Item 1</div>
+          <div class="flex-item">Item 2</div>
+          <div class="flex-item">Item 3</div>
+        </div>
+      </div>
+
+      <!-- Flex Direction -->
+      <div class="demo-section">
+        <h2>2. Flex Direction</h2>
+
+        <h3 style="margin: 20px; color: #7f8c8d">
+          flex-direction: row (기본값)
+        </h3>
+        <div class="code-snippet">flex-direction: row;</div>
+        <div class="demo-container flex-row">
+          <div class="flex-item">1</div>
+          <div class="flex-item">2</div>
+          <div class="flex-item">3</div>
+        </div>
+
+        <h3 style="margin: 20px; color: #7f8c8d">flex-direction: column</h3>
+        <div class="code-snippet">flex-direction: column;</div>
+        <div class="demo-container flex-column">
+          <div class="flex-item">1</div>
+          <div class="flex-item">2</div>
+          <div class="flex-item">3</div>
+        </div>
+
+        <h3 style="margin: 20px; color: #7f8c8d">
+          flex-direction: row-reverse
+        </h3>
+        <div class="code-snippet">flex-direction: row-reverse;</div>
+        <div class="demo-container flex-row-reverse">
+          <div class="flex-item">1</div>
+          <div class="flex-item">2</div>
+          <div class="flex-item">3</div>
+        </div>
+      </div>
+
+      <!-- Justify Content -->
+      <div class="demo-section">
+        <h2>3. Justify Content (주축 정렬)</h2>
+
+        <h3 style="margin: 20px; color: #7f8c8d">
+          justify-content: flex-start
+        </h3>
+        <div class="code-snippet">justify-content: flex-start;</div>
+        <div class="demo-container justify-start">
+          <div class="flex-item">1</div>
+          <div class="flex-item">2</div>
+          <div class="flex-item">3</div>
+        </div>
+
+        <h3 style="margin: 20px; color: #7f8c8d">justify-content: center</h3>
+        <div class="code-snippet">justify-content: center;</div>
+        <div class="demo-container justify-center">
+          <div class="flex-item">1</div>
+          <div class="flex-item">2</div>
+          <div class="flex-item">3</div>
+        </div>
+
+        <h3 style="margin: 20px; color: #7f8c8d">
+          justify-content: space-between
+        </h3>
+        <div class="code-snippet">justify-content: space-between;</div>
+        <div class="demo-container justify-between">
+          <div class="flex-item">1</div>
+          <div class="flex-item">2</div>
+          <div class="flex-item">3</div>
+        </div>
+
+        <h3 style="margin: 20px; color: #7f8c8d">
+          justify-content: space-around
+        </h3>
+        <div class="code-snippet">justify-content: space-around;</div>
+        <div class="demo-container justify-around">
+          <div class="flex-item">1</div>
+          <div class="flex-item">2</div>
+          <div class="flex-item">3</div>
+        </div>
+
+        <h3 style="margin: 20px; color: #7f8c8d">
+          justify-content: space-evenly
+        </h3>
+        <div class="code-snippet">justify-content: space-evenly;</div>
+        <div class="demo-container justify-evenly">
+          <div class="flex-item">1</div>
+          <div class="flex-item">2</div>
+          <div class="flex-item">3</div>
+        </div>
+      </div>
+
+      <!-- Align Items -->
+      <div class="demo-section">
+        <h2>4. Align Items (교차축 정렬)</h2>
+
+        <h3 style="margin: 20px; color: #7f8c8d">align-items: flex-start</h3>
+        <div class="code-snippet">align-items: flex-start;</div>
+        <div class="demo-container align-start">
+          <div class="flex-item">1</div>
+          <div class="flex-item">2</div>
+          <div class="flex-item">3</div>
+        </div>
+
+        <h3 style="margin: 20px; color: #7f8c8d">align-items: center</h3>
+        <div class="code-snippet">align-items: center;</div>
+        <div class="demo-container align-center">
+          <div class="flex-item">1</div>
+          <div class="flex-item">2</div>
+          <div class="flex-item">3</div>
+        </div>
+
+        <h3 style="margin: 20px; color: #7f8c8d">align-items: stretch</h3>
+        <div class="code-snippet">align-items: stretch;</div>
+        <div class="demo-container align-stretch">
+          <div class="flex-item">1</div>
+          <div class="flex-item">2</div>
+          <div class="flex-item">3</div>
+        </div>
+      </div>
+
+      <!-- Flex Wrap -->
+      <div class="demo-section">
+        <h2>5. Flex Wrap</h2>
+
+        <h3 style="margin: 20px; color: #7f8c8d">flex-wrap: wrap</h3>
+        <div class="code-snippet">flex-wrap: wrap;</div>
+        <div class="demo-container flex-wrap">
+          <div class="flex-item">Item 1</div>
+          <div class="flex-item">Item 2</div>
+          <div class="flex-item">Item 3</div>
+          <div class="flex-item">Item 4</div>
+          <div class="flex-item">Item 5</div>
+          <div class="flex-item">Item 6</div>
+          <div class="flex-item">Item 7</div>
+          <div class="flex-item">Item 8</div>
+        </div>
+      </div>
+
+      <!-- Flex Properties -->
+      <div class="demo-section">
+        <h2>6. Flex Grow (확장 비율)</h2>
+        <div class="code-snippet">flex-grow: 1, 2, 3;</div>
+        <div class="demo-container flex-grow-demo">
+          <div class="flex-item grow-1">grow: 1</div>
+          <div class="flex-item grow-2">grow: 2</div>
+          <div class="flex-item grow-3">grow: 3</div>
+        </div>
+      </div>
+
+      <!-- Gap Property -->
+      <div class="demo-section">
+        <h2>7. Gap Property</h2>
+        <div class="code-snippet">gap: 20px;</div>
+        <div class="demo-container" style="display: flex; gap: 20px">
+          <div class="flex-item">Item 1</div>
+          <div class="flex-item">Item 2</div>
+          <div class="flex-item">Item 3</div>
+        </div>
+      </div>
+
+      <!-- 실제 레이아웃 예제 -->
+      <div class="demo-section">
+        <h2>8. 실제 레이아웃 예제</h2>
+
+        <h3 style="margin: 20px; color: #7f8c8d">📋 헤더 네비게이션</h3>
+        <div class="code-snippet">
+          display: flex; justify-content: space-between; align-items: center;
+        </div>
+        <div class="header-layout">
+          <div class="logo">MyWebsite</div>
+          <nav>
+            <ul class="nav">
+              <li><a href="#">홈</a></li>
+              <li><a href="#">소개</a></li>
+              <li><a href="#">서비스</a></li>
+              <li><a href="#">연락처</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <h3 style="margin: 20px; color: #7f8c8d">🎯 카드 레이아웃</h3>
+        <div class="code-snippet">
+          display: flex; flex-wrap: wrap; gap: 20px;
+        </div>
+        <div class="card-layout">
+          <div class="card">
+            <h3>카드 1</h3>
+            <p>Flexbox를 사용한 반응형 카드 레이아웃입니다.</p>
+          </div>
+          <div class="card">
+            <h3>카드 2</h3>
+            <p>화면 크기에 따라 자동으로 배치가 조정됩니다.</p>
+          </div>
+          <div class="card">
+            <h3>카드 3</h3>
+            <p>flex: 1 1 300px 속성으로 최소 너비를 보장합니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 반응형 Flexbox -->
+      <div class="demo-section">
+        <h2>9. 반응형 Flexbox</h2>
+        <div class="code-snippet">
+          flex: 1 1 250px; /* grow shrink basis */ gap: 15px;
+        </div>
+        <div class="demo-container responsive-flex">
+          <div class="responsive-item item-1">반응형 1</div>
+          <div class="responsive-item item-2">반응형 2</div>
+          <div class="responsive-item item-3">반응형 3</div>
+          <div class="responsive-item item-4">반응형 4</div>
+        </div>
+      </div>
+
+      <!-- 인터랙티브 데모 -->
+      <div class="demo-section">
+        <h2>10. 🎮 인터랙티브 Flexbox 실습</h2>
+        <div class="controls">
+          <div class="control-group">
+            <label for="direction">Flex Direction:</label>
+            <select id="direction" onchange="updateDemo()">
+              <option value="row">row</option>
+              <option value="column">column</option>
+              <option value="row-reverse">row-reverse</option>
+              <option value="column-reverse">column-reverse</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="justify">Justify Content:</label>
+            <select id="justify" onchange="updateDemo()">
+              <option value="flex-start">flex-start</option>
+              <option value="center">center</option>
+              <option value="flex-end">flex-end</option>
+              <option value="space-between">space-between</option>
+              <option value="space-around">space-around</option>
+              <option value="space-evenly">space-evenly</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="align">Align Items:</label>
+            <select id="align" onchange="updateDemo()">
+              <option value="stretch">stretch</option>
+              <option value="flex-start">flex-start</option>
+              <option value="center">center</option>
+              <option value="flex-end">flex-end</option>
+              <option value="baseline">baseline</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="wrap">Flex Wrap:</label>
+            <select id="wrap" onchange="updateDemo()">
+              <option value="nowrap">nowrap</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

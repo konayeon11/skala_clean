@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>쇼핑몰 주문 처리 예제</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="shoppingmall.css" />
+</head>
+<body>
+  <h3>쇼핑몰 주문 처리</h3>
+  <h5>상품명: 테스트상품</h5>
+  <p>가격: 25,000원</p>
+
+  <form id="orderForm">
+    <label>
+      주문 수량:
+      <input type="number" id="orderQuantity" min="1" value="1" required />
+    </label>
+    <br /><br />
+
+    <label>
+      회원 등급:
+      <select id="membership" required>
+        <option value="NORMAL">NORMAL</option>
+        <option value="GOLD">GOLD</option>
+        <option value="VIP">VIP</option>
+      </select>
+    </label>
+    <br /><br />
+
+    <label>
+      배송 옵션:
+      <select id="shippingOption" required>
+        <option value="standard">standard</option>
+        <option value="fast">fast (+3,000원)</option>
+      </select>
+    </label>
+    <br /><br />
+
+    <button type="submit">주문하기</button>
+  </form>
+
+  <div id="result" style="margin-top:20px; font-weight:bold; white-space: pre-line;"></div>
+
+  <script>
+    const unitPrice = 25000; // 테스트상품 1개 가격
+    const fixedStock = 10; // 재고 10개로 고정
+
+    function processOrder(itemStock, orderQuantity, membership, shippingOption) {
+      if (itemStock < orderQuantity) {
+        const msg = `죄송합니다. 해당 상품은 품절입니다.`;
+        console.log(msg);
+        document.getElementById("result").textContent = msg;
+        return { success: false, message: msg };
+      }
+
+      let price = unitPrice * orderQuantity;
+
+      // 회원 등급 할인
+      if (membership === "VIP") {
+        price *= 0.9;
+      } else if (membership === "GOLD") {
+        price *= 0.95;
+      }
+
+      // 주문 금액에 따른 추가 할인
+      if (price >= 200000) {
+        price -= 15000;
+      } else if (price >= 100000) {
+        price -= 5000;
+      }
+
+      // 배송 옵션 추가비용
+      if (shippingOption === "fast") {
+        price += 3000;
+      }
+
+      price = Math.max(price, 0);
+
+      const msg = `주문이 정상적으로 완료되었습니다.\n최종 결제 금액: ${price.toLocaleString()}원`;
+      console.log(msg);
+      document.getElementById("result").textContent = msg;
+      return { success: true, message: msg, totalPrice: price };
+    }
+
+    //폼을 제출(submit) 했을 때 실행될 이벤트 핸들러 함수를 등록
+    document.getElementById("orderForm").addEventListener("submit", function (e) {
+
+      //폼 제출 시 브라우저가 기본적으로 페이지를 새로고침하거나 데이터를 서버로 보내는 동작을 막기
+      e.preventDefault();
+
+      const itemStock = fixedStock; // 재고는 고정값 사용
+      //사용자가 입력한 값을 가져와 숫자 타입으로 변환
+      const orderQuantity = Number(document.getElementById("orderQuantity").value);
+      const membership = document.getElementById("membership").value;
+      const shippingOption = document.getElementById("shippingOption").value;
+
+      //위에서 수집한 값을 인자로 processOrder 함수(주문 처리 로직)를 호출. 
+      //주문 성공 여부와 최종 결제 금액 등의 정보를 포함한 결과 객체를 받음.
+      const result = processOrder(itemStock, orderQuantity, membership, shippingOption);
+
+      //주문 처리 결과를 보여줄 <div id="result"> 요소를 선택
+      const resultDiv = document.getElementById("result");
+      //사용자에게 주문 결과를 보여줌
+      resultDiv.textContent = result.message;
+    });
+  </script>
+</body>
+</html>

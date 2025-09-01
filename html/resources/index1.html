@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML5 시맨틱 태그 예제</title>
+    <style>
+      header,
+      nav,
+      section,
+      article,
+      aside,
+      footer {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 5px;
+      }
+      body {
+        font-family: Arial, sans-serif;
+      }
+      main {
+        display: flex;
+      }
+      section {
+        flex: 3;
+      }
+      aside {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>나의 블로그</h1>
+      <p>시맨틱 태그를 활용한 레이아웃</p>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="#">홈</a></li>
+        <li><a href="#">소개</a></li>
+        <li><a href="#">글 목록</a></li>
+        <li><a href="#">문의하기</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section>
+        <article>
+          <h2>첫 번째 글 제목</h2>
+          <p>
+            이곳은 첫 번째 글의 내용입니다. 시맨틱 태그를 활용하여
+            구성하였습니다.
+          </p>
+        </article>
+
+        <article>
+          <h2>두 번째 글 제목</h2>
+          <p>
+            이곳은 두 번째 글의 내용입니다. HTML5는 시각적인 구조보다 의미를
+            중요시합니다.
+          </p>
+        </article>
+      </section>
+
+      <aside>
+        <h3>사이드 정보</h3>
+        <p>관련 링크, 광고, 태그 등을 이곳에 배치할 수 있습니다.</p>
+      </aside>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 나의 블로그. 모든 권리 보유.</p>
+    </footer>
+  </body>
+</html>

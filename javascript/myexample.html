@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>쇼핑몰 예제🛒</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fff8f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      background-color: #9861ff;
+      color: white;
+      padding: 20px 0;
+      margin-bottom: 0;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 30px;
+      background-color: #fff3e6;
+    }
+
+    .fruit {
+      background: white;
+      border: 2px solid #591cb4;
+      border-radius: 12px;
+      padding: 15px;
+      width: 180px;
+      text-align: center;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .fruit img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .fruit input {
+      width: 60px;
+      padding: 5px;
+      margin-top: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .controls {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .controls select {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #591cb4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #result {
+      max-width: 700px;
+      margin: 20px auto;
+      background-color: #fff3e6;
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    strong {
+      color: #591cb4;
+    }
+  </style>
+</head>
+<body>
+  <h1>쇼핑몰 예제</h1>
+
+  <!-- 이미지 주소 복사해서 src에 넣기, 메뉴창-->
+  <div class="menu">
+    <div class="fruit">
+      <img src="http://sanriokorea.co.kr/wp-content/themes/sanrio/images/new_main_crt1_ov.png" alt="헬로키티">
+      <h3>헬로키티</h3> 
+      <p>1101원</p>
+      <input type="number" id="kitty" min="0" value="0">
+    </div>
+    <div class="fruit">
+      <img src="http://sanriokorea.co.kr/wp-content/themes/sanrio/images/new_main_crt2_ov.png" alt="마멜">
+      <h3>마이멜로디</h3>
+      <p>118원</p>
+      <input type="number" id="melody" min="0" value="0">
+    </div>
+    <div class="fruit">
+      <img src="http://sanriokorea.co.kr/wp-content/themes/sanrio/images/new_main_crt3_ov.png" alt="쿠로미">
+      <h3>쿠로미</h3>
+      <p>1031원</p>
+      <input type="number" id="kuromi" min="0" value="0">
+    </div>
+    <div class="fruit">
+      <img src="http://sanriokorea.co.kr/wp-content/themes/sanrio/images/new_main_crt4_ov.png" alt="폼폼푸린">
+      <h3>폼폼푸린</h3>
+      <p>416원</p>
+      <input type="number" id="purin" min="0" value="0">
+    </div>
+    <div class="fruit">
+      <img src="http://sanriokorea.co.kr/wp-content/themes/sanrio/images/new_main_crt5_ov.png" alt="시나모롤">
+      <h3>시나모롤</h3>
+      <p>306원</p>
+      <input type="number" id="cinamo" min="0" value="0">
+    </div>
+  </div>
+
+  <!-- 등급 드롭다운 -->
+  <div class="controls">
+    <label for="membership">회원 등급 선택: </label>
+    <select id="membership">
+      <option value="normal">일반회원 (할인 없음)</option>
+      <option value="gold">GOLD회원 (5% 할인)</option>
+      <option value="VIP">VIP회원 (10% 할인)</option>
+    </select>
+  </div>
+
+  <div class="controls">
+    <label for="delivery">배송옵션: </label>
+    <select id="delivery">
+      <option value="standard">standard (무료)</option>
+      <option value="fast">fast (+3,000원)</option>
+    </select>
+  </div>
+
+   <!-- 버튼 누르면 함수 호출되도록-->
+  <button onclick="processOrder()">주문하기</button>
+
+  <!-- 결과 띄우는 곳 -->
+  <div id="result"></div>
+
+  <!-- 자바스크립트: 오더진행 함수 -->
+  <script>
+    function processOrder() {
+      //먼저 변수 선언
+      const prices = {
+        kitty: 1101,
+        melody: 118,
+        kuromi: 1031,
+        purin: 416,
+        cinamo: 306
+      };
+
+      //갯수 받은거 넣기
+      const quantities = {
+        kitty: parseInt(document.getElementById("kitty").value) || 0,
+        melody: parseInt(document.getElementById("melody").value) || 0,
+        kuromi: parseInt(document.getElementById("kuromi").value) || 0,
+        purin: parseInt(document.getElementById("purin").value) || 0,
+        cinamo: parseInt(document.getElementById("cinamo").value) || 0
+      };
+    
+    //quantities 객체에 들어있는 모든 값들의 합을 계산하는 역할
+    //Object.values(quantities): quantities 객체의 모든 값만 배열로 반환합니다. /배열의 모든 값을 누적해서 더하는 함수
+    const totalQuantity = Object.values(quantities).reduce((a, b) => a + b, 0);
+
+    // id가 "result"인 요소(element)를 찾아서 변수 resultDiv에 저장하는 역할
+    const resultDiv = document.getElementById("result");
+
+    if (totalQuantity === 0) {
+      resultDiv.innerHTML = `<h2>❗ 품절 되었습니다. 주문할 수량을 다시 확인해주세요.</h2>`;
+      return;
+    }
+
+      let subtotal = 0;
+      let resultHTML = "<h2>🧾 주문 내역</h2><ul>";
+
+    //각 과일 이름(fruit)을 하나씩 순회하는 반복문
+
+      for (let fruit in quantities) {
+        //해당 과일의 수량이 0보다 클 때만 아래 코드를 실행
+        if (quantities[fruit] > 0) {
+            //prices 객체에서 해당 과일의 단가를 가져와 quantities[fruit](수량)과 곱해서 그 과일의 총 금액을 구함
+          let itemTotal = prices[fruit] * quantities[fruit];
+          //각 과일의 총 금액을 subtotal 변수에 더해서 전체 주문 금액을 누적
+          subtotal += itemTotal;
+          //fruit (예: "kitty")에 해당하는 한글 이름을 객체 리터럴에서 꺼내서 fruitName에 저장
+          //즉, "kitty" → "헬로키티" 이런 매핑 역할
+          const fruitName = {
+            kitty: "헬로키티",
+            melody: "마이멜로디",
+            kuromi: "쿠로미",
+            purin: "폼폼푸린",
+            cinamo: "시나모롤"
+          }[fruit];
+          //주문 내역을 HTML <li> 요소 형태로 추가, 예: <li>헬로키티 2개 - 6,000원</li>
+          resultHTML += `<li>${fruitName} ${quantities[fruit]}개 - ${itemTotal.toLocaleString()}원</li>`;
+        }
+      }
+      //반복문이 끝난 후, 목록(ul)을 닫고, 주문한 상품들의 총액을 <p> 태그로 출력
+      resultHTML += "</ul>";
+      resultHTML += `<p>🧾 상품 총액: ${subtotal.toLocaleString()}원</p>`;
+
+      // 회원 등급 할인
+      const membership = document.getElementById("membership").value;
+      let memberDiscountRate = 0;
+      if (membership === "gold") memberDiscountRate = 0.05;
+      else if (membership === "VIP") memberDiscountRate = 0.10;
+
+      const memberDiscount = subtotal * memberDiscountRate;
+      resultHTML += `<p>🎖️ 회원 등급 할인 (${(memberDiscountRate * 100).toFixed(0)}%): -${memberDiscount.toLocaleString()}원</p>`;
+
+      // 추가 할인 (총액 기준)
+      let extraDiscountRate = 0;
+      if (subtotal >= 200000) extraDiscountRate = 0.075;
+      else if (subtotal >= 100000) extraDiscountRate = 0.05;
+
+      const extraDiscount = subtotal * extraDiscountRate;
+      resultHTML += `<p>💸 주문 금액 추가 할인 (${(extraDiscountRate * 100).toFixed(0)}%): -${extraDiscount.toLocaleString()}원</p>`;
+
+      // 총 할인 금액
+      const discountedTotal = subtotal - memberDiscount - extraDiscount;
+
+      // 배송 옵션 선택값 가져오기
+      const deliveryOption = document.getElementById("delivery").value;
+
+     // 배송비 계산 (standard는 무료, fast는 3000원 추가)
+     let deliveryFee = 0;
+     if (deliveryOption === "fast") {
+         deliveryFee = 3000;
+     } else {
+         deliveryFee = 0;
+     }
+
+      resultHTML += `<p>🚚 배송비: ${deliveryFee.toLocaleString()}원</p>`;
+
+      // 최종 메시지
+      resultHTML += `<p>🎉 감사합니다! 주문이 정상적으로 완료되었습니다.</p>`;
+
+      // 총 결제금액
+      const finalTotal = discountedTotal + deliveryFee;
+      resultHTML += `<p><strong>💳 최종 결제 금액: ${finalTotal.toLocaleString()}원</strong></p>`;
+
+      document.getElementById("result").innerHTML = resultHTML;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>쇼핑몰 예제</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="shoppingmall3.css" />
+</head>
+<body>
+
+  <h1>쇼핑몰 주문 처리</h1>
+
+  <form id="orderForm">
+
+    <label>
+      상품 재고:
+      <input type="number" id="itemStock" min="0" required />
+    </label>
+
+    <label>
+      최초 주문 금액:
+      <!-- 숫자 입력으로, min="0"으로 음수 제한, required 추가 -->
+      <input type="number" id="orderAmount" min="0" required />
+    </label>
+
+    <label>
+      회원 등급:
+      <!-- 드롭다운 리스트(빈 값 있는)-->
+      <select id="membership" required>
+        <option value="">---</option>
+        <option value="NORMAL">NORMAL</option>
+        <option value="GOLD">GOLD</option>
+        <option value="VIP">VIP</option>
+      </select>
+    </label>
+
+    <label>
+      배송 옵션:
+      <!-- 드롭다운 리스트(빈 값 있는)-->
+      <select id="shippingOption" required>
+        <option value="">---</option>
+        <option value="standard">standard</option>
+        <option value="fast">fast (+3,000원)</option>
+      </select>
+    </label>
+
+    <button type="submit">주문하기</button>
+  </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+
+    function processOrder(itemStock, orderAmount, membership, shippingOption) {
+      // 재고 확인
+      if (itemStock < 1) {
+        return "죄송합니다. 해당 상품은 품절입니다.";
+      }
+
+      let price = orderAmount;
+
+      // 회원 등급 할인
+      if (membership === "VIP") {
+        price *= 0.9;
+      } else if (membership === "GOLD") {
+        price *= 0.95;
+      }
+
+      // 주문 금액에 따른 추가 할인
+      if (price >= 200000) {
+        price -= 15000;
+      } else if (price >= 100000) {
+        price -= 5000;
+      }
+
+      // 배송 옵션 추가 비용
+      if (shippingOption === "fast") {
+        price += 3000;
+      }
+
+      price = Math.max(price, 0);
+
+      return `주문이 정상적으로 완료되었습니다.\n최종 결제 금액: ${price.toLocaleString()}원`;
+    }
+
+    //주문하기 버튼을 눌러 폼을 제출(submit) 했을 때 실행될 이벤트 핸들러 함수를 등록
+
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+        console.log("submit 이벤트 발생");
+        //페이지를 새로고침하거나 데이터를 서버로 보내는 동작을 막기.
+      e.preventDefault();
+
+      // 입력 값 가져오기
+      const itemStockInput = document.getElementById("itemStock");
+      const orderAmountInput = document.getElementById("orderAmount");
+      const membershipSelect = document.getElementById("membership");
+      const shippingSelect = document.getElementById("shippingOption");
+
+      // 유효성 체크: 숫자 입력 검사 (빈 값, 음수 제외) 중요!
+      const itemStock = Number(itemStockInput.value);
+      const orderAmount = Number(orderAmountInput.value);
+      const membership = membershipSelect.value;
+      const shippingOption = shippingSelect.value;
+
+      if (!itemStockInput.value || itemStock < 0) {
+        alert("상품 재고는 0 이상의 숫자를 입력해주세요.");
+        itemStockInput.focus();
+        return;
+      }
+
+      if (!orderAmountInput.value || orderAmount < 0) {
+        alert("최초 주문 금액은 0 이상의 숫자를 입력해주세요.");
+        orderAmountInput.focus();
+        return;
+      }
+
+      if (!membership) {
+        alert("회원 등급을 선택해주세요.");
+        membershipSelect.focus();
+        return;
+      }
+
+      if (!shippingOption) {
+        alert("배송 옵션을 선택해주세요.");
+        shippingSelect.focus();
+        return;
+      }
+
+      // 주문 처리 함수 호출
+      const message = processOrder(itemStock, orderAmount, membership, shippingOption);
+
+      // 입력값과 결과 메시지 콘솔에 출력
+      console.log("입력된 상품 재고:", itemStock);
+      console.log("입력된 최초 주문 금액:", orderAmount);
+      console.log("선택된 회원 등급:", membership);
+      console.log("선택된 배송 옵션:", shippingOption);
+      console.log("최종 주문 결과 메시지:", message);
+
+      // alert로 결과 출력
+      alert(message);
+    });
+    });
+  </script>
+</body>
+</html>

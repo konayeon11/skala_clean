@@ -1,0 +1,5 @@
+issue_id,title,description,tags
+101,Login failure on Safari,Users report login failing on Safari 14. Appears to be cookie-related.,"auth,frontend,safari"
+102,Memory leak in data parser,"After prolonged use, the data parser shows increasing memory usage.","backend,memory,bug"
+103,Button misaligned on mobile,The submit button is not centered on mobile viewports.,"ui,mobile,css"
+104,Crash when uploading file,The app crashes when users upload files larger than 50MB.,"bug,upload,file"

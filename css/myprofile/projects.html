@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Semantic HTML - Nayeon's Webpage</title>
+  <!-- Flatly 테마 적용 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles2.css" />
+</head>
+<body>
+
+  <!-- 헤더 (녹색 배경) -->
+  <header class="bg-success text-white text-center py-4 mb-4">
+    <h1>about me</h1>
+  </header>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="container">
+    <div class="row mb-5">
+      <!-- 프로필 카드 -->
+      <article class="col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Profile</h5>
+            <img src="Firefly_A realistic-style hamster sitting at a desk, coding on a laptop, surrounded by stacks 361626.jpg" alt="코딩하는 햄스터 이미지" class="rounded-circle mb-3" width="150" height="150" />
+            <p><strong>Name:</strong> Ko Nayeon</p>
+            <p><strong>Age:</strong> 22</p>
+            <p><strong>Major:</strong> Information Statistics, Library Information Science</p>
+            <p><strong>Hobby:</strong> Knitting, Yoga</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 프로그래밍 언어 및 수료 내역 -->
+      <article class="col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title mb-3">Programming Skills & Completion</h5>
+            <h6>Available Programming Languages</h6>
+            <ul>
+              <li>Python</li>
+              <li>C++</li>
+              <li>Java</li>
+              <li>JavaScript</li>
+              <li>HTML</li>
+              <li>R</li>
+            </ul>
+            <h6 class="mt-4">Completed Courses</h6>
+            <ul>
+              <li>SKADA Intermediate Class</li>
+              <li>BDA 7th Batch Data Analysis and Modeling Class</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="row">
+      <!-- 링크 섹션 -->
+      <section class="col-md-6 mb-4">
+        <article>
+          <h3>Links</h3>
+          <p>Click the buttons below to visit GitHub and the projects.</p>
+          <a class="btn btn-outline-primary me-2 mb-2" href="https://github.com/konayeon11/skala.git" target="_blank" rel="noopener noreferrer" role="button">GitHub 저장소</a>
+          <a class="btn btn-outline-success mb-2" href="https://drive.google.com/drive/folders/1vlrbZ_nS4d7pT4NNdDYYdhN5aKc62Ewc?usp=sharing" target="_blank" rel="noopener noreferrer" role="button">프로젝트 폴더</a>
+          
+        </article>
+      </section>
+    <!-- 영상 & 오디오 섹션 -->
+    <aside class="col-md-6 mb-4">
+    <!-- YouTube 영상 임베드 -->
+    <div class="mb-4 text-center">
+        <h5 class="mb-2">영상 삽입</h5>
+        <div class="ratio ratio-16x9">
+        <iframe 
+            src="https://www.youtube.com/embed/MKfCCMPzDNw"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+        </div>
+    </div>
+
+    <!-- 오디오 플레이어 -->
+    <div class="text-center">
+        <h5 class="mb-2">오디오 삽입</h5>
+        <audio controls>
+        <source src="your-audio-file.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+    </aside>
+
+     <div class="container my-5">
+    <h2 class="mb-4">📩 contact</h2>
+    <form action="#" method="post">
+      <!-- 이름 -->
+      <div class="mb-3">
+        <label for="name" class="form-label">이름</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="고나연" required>
+      </div>
+
+      <!-- 이메일 -->
+      <div class="mb-3">
+        <label for="email" class="form-label">이메일</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+      </div>
+
+      <!-- 메시지 -->
+      <div class="mb-3">
+        <label for="message" class="form-label">내용</label>
+        <textarea class="form-control" id="message" name="message" rows="5" placeholder="내용을 입력하세요..." required></textarea>
+      </div>
+
+      <!-- 제출 버튼 -->
+      <button type="submit" class="btn btn-primary">보내기</button>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    </div>
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="bg-light text-center py-3 mt-5">
+    <p class="mb-0">&copy; 2025 Nayeon's Webpage. All rights reserved.</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

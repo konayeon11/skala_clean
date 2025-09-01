@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+    .search-container {
+      display: grid;
+      grid-template-columns: 1fr auto; /* 왼쪽은 유연, 오른쪽은 버튼 크기만큼 */
+      gap: 10px;
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 10px;
+    }
+
+    .data-box {
+      display: flex;
+      flex-direction: column; /* 수직 방향 정렬 */
+      padding: 20px;
+      border: 1px solid #ccc;
+      margin: 30px auto;
+      max-width: 400px;
+      background-color: #f9f9f9;
+    }
+
+    .title {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .line {
+      height: 1px;
+      background-color: #333;
+      width: 100%;
+    }
+
+    </style>
+</head>
+<body>
+     <div class="search-container">
+        <input placeholder="키워드 입력" />
+        <button>검색</button>
+     </div>
+
+     <div class="data-box">
+        <div class="title">목록형 데이터 영역</div>
+        <div class="line"></div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🍓어서오세요. 과일가게</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fff8f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      background-color: #ff6f61;
+      color: white;
+      padding: 20px 0;
+      margin-bottom: 0;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 30px;
+      background-color: #fff3e6;
+    }
+
+    .fruit {
+      background: white;
+      border: 2px solid #ffcc99;
+      border-radius: 12px;
+      padding: 15px;
+      width: 180px;
+      text-align: center;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .fruit img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .fruit input {
+      width: 60px;
+      padding: 5px;
+      margin-top: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .controls {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .controls select {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #result {
+      max-width: 700px;
+      margin: 20px auto;
+      background-color: #fff3e6;
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    strong {
+      color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍓민석이네, 과일가게</h1>
+
+  <div class="menu">
+    <div class="fruit">
+      <img src="https://static.megamart.com/product/image/0700/07002861/07002861_1_960.jpg" alt="사과">
+      <h3>사과</h3>
+      <p>1,700원</p>
+      <input type="number" id="apple" min="0" value="0">
+    </div>
+    <div class="fruit">
+      <img src="http://www.kfdn.co.kr/imgdata/fmnews_kr/202310/2023101944262840.jpg" alt="배">
+      <h3>배</h3>
+      <p>2,320원</p>
+      <input type="number" id="pear" min="0" value="0">
+    </div>
+    <div class="fruit">
+      <img src="https://cdn.sisajournal.com/news/photo/202105/216731_124666_4150.jpg" alt="바나나">
+      <h3>바나나</h3>
+      <p>500원</p>
+      <input type="number" id="banana" min="0" value="0">
+    </div>
+    <div class="fruit">
+      <img src="https://www.dailysecu.com/news/photo/201906/53502_45794_3555.jpg" alt="키위">
+      <h3>키위</h3>
+      <p>600원</p>
+      <input type="number" id="kiwi" min="0" value="0">
+    </div>
+    <div class="fruit">
+      <img src="https://cdn.kmpnews.co.kr/news/photo/202009/40160_35362_1437.jpg" alt="수박">
+      <h3>수박</h3>
+      <p>7,500원</p>
+      <input type="number" id="watermelon" min="0" value="0">
+    </div>
+  </div>
+
+  <div class="controls">
+    <label for="membership">회원 등급 선택: </label>
+    <select id="membership">
+      <option value="normal">일반회원 (할인 없음)</option>
+      <option value="gold">GOLD회원 (5% 할인)</option>
+      <option value="VIP">VIP회원 (10% 할인)</option>
+    </select>
+  </div>
+
+  <button onclick="processOrder()">주문하기</button>
+
+  <div id="result"></div>
+
+  <script>
+    function processOrder() {
+      const prices = {
+        apple: 1700,
+        pear: 2320,
+        banana: 500,
+        kiwi: 600,
+        watermelon: 7500
+      };
+
+      const quantities = {
+        apple: parseInt(document.getElementById("apple").value) || 0,
+        pear: parseInt(document.getElementById("pear").value) || 0,
+        banana: parseInt(document.getElementById("banana").value) || 0,
+        kiwi: parseInt(document.getElementById("kiwi").value) || 0,
+        watermelon: parseInt(document.getElementById("watermelon").value) || 0
+      };
+
+
+    const totalQuantity = Object.values(quantities).reduce((a, b) => a + b, 0);
+
+    const resultDiv = document.getElementById("result");
+
+    if (totalQuantity === 0) {
+      resultDiv.innerHTML = `<h2>❗ 품절 되었습니다. 주문할 수량을 다시 확인해주세요.</h2>`;
+      return;
+    }
+
+      let subtotal = 0;
+      let resultHTML = "<h2>🧾 주문 내역</h2><ul>";
+
+      for (let fruit in quantities) {
+        if (quantities[fruit] > 0) {
+          let itemTotal = prices[fruit] * quantities[fruit];
+          subtotal += itemTotal;
+          const fruitName = {
+            apple: "사과",
+            pear: "배",
+            banana: "바나나",
+            kiwi: "키위",
+            watermelon: "수박"
+          }[fruit];
+          resultHTML += `<li>${fruitName} ${quantities[fruit]}개 - ${itemTotal.toLocaleString()}원</li>`;
+        }
+      }
+      resultHTML += "</ul>";
+      resultHTML += `<p>🧾 상품 총액: ${subtotal.toLocaleString()}원</p>`;
+
+      // 회원 등급 할인
+      const membership = document.getElementById("membership").value;
+      let memberDiscountRate = 0;
+      if (membership === "gold") memberDiscountRate = 0.05;
+      else if (membership === "VIP") memberDiscountRate = 0.10;
+
+      const memberDiscount = subtotal * memberDiscountRate;
+      resultHTML += `<p>🎖️ 회원 등급 할인 (${(memberDiscountRate * 100).toFixed(0)}%): -${memberDiscount.toLocaleString()}원</p>`;
+
+      // 추가 할인 (총액 기준)
+      let extraDiscountRate = 0;
+      if (subtotal >= 200000) extraDiscountRate = 0.075;
+      else if (subtotal >= 100000) extraDiscountRate = 0.05;
+
+      const extraDiscount = subtotal * extraDiscountRate;
+      resultHTML += `<p>💸 주문 금액 추가 할인 (${(extraDiscountRate * 100).toFixed(0)}%): -${extraDiscount.toLocaleString()}원</p>`;
+
+      // 총 할인 금액
+      const discountedTotal = subtotal - memberDiscount - extraDiscount;
+
+      // 배송비
+      let deliveryFee = discountedTotal >= 100000 ? 0 : 5000;
+      resultHTML += `<p>🚚 배송비: ${deliveryFee.toLocaleString()}원</p>`;
+
+      // 최종 메시지
+      resultHTML += `<p>🎉 감사합니다! 주문이 정상적으로 완료되었습니다.🍉🍎🍌</p>`;
+
+      // 총 결제금액
+      const finalTotal = discountedTotal + deliveryFee;
+      resultHTML += `<p><strong>💳 최종 결제 금액: ${finalTotal.toLocaleString()}원</strong></p>`;
+
+      document.getElementById("result").innerHTML = resultHTML;
+    }
+  </script>
+</body>
+</html>

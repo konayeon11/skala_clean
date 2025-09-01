@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>도서 등록</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>도서 등록하기</h1>
+
+  <form id="bookForm">
+    <label>제목</label>
+    <input type="text" id="title" required />
+
+    <label>저자</label>
+    <input type="text" id="author" required />
+
+    <label>가격</label>
+    <input type="number" id="price" required />
+
+    <label>재고</label>
+    <input type="number" id="stock" required />
+
+    <label>카테고리</label>
+    <select id="category" required>
+      <option value="프로그래밍">프로그래밍</option>
+      <option value="경제">경제</option>
+      <option value="소설">소설</option>
+      <option value="기타">기타</option>
+    </select>
+
+    <button type="submit">도서 등록</button>
+  </form>
+
+  <button onclick="location.href='index.html'">메인으로 돌아가기</button>
+
+  <script>
+    const books = JSON.parse(localStorage.getItem('books')) || [];
+
+    document.getElementById('bookForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const title = document.getElementById('title').value.trim();
+      const author = document.getElementById('author').value.trim();
+      const price = parseInt(document.getElementById('price').value);
+      const stock = parseInt(document.getElementById('stock').value);
+      const category = document.getElementById('category').value;
+
+      if (!title || !author || isNaN(price) || isNaN(stock)) {
+        alert("모든 필드를 정확히 입력해주세요.");
+        return;
+      }
+
+      const newBook = { title, author, price, stock, category };
+      books.push(newBook);
+      localStorage.setItem('books', JSON.stringify(books));
+
+      alert("도서가 등록되었습니다.");
+      event.target.reset();
+    });
+  </script>
+</body>
+</html>

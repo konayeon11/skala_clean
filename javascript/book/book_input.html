@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>도서 입력 및 카테고리 추천</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f8ff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form, .controls {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #4e6bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .output {
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #eef1ff;
+      border-radius: 12px;
+    }
+
+    .output h2 {
+      color: #4e6bff;
+    }
+
+    .book-item {
+      margin-bottom: 10px;
+      padding: 10px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .search-area {
+    display: flex;
+    max-width: 500px;
+    width: 100%;
+    margin: 20px auto;
+    gap: 10px;
+    box-sizing: border-box;
+    }
+
+    #searchInput {
+    width: 390px; /* 500 - 100(버튼 너비) - 10(gap) */
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    height: 40px;
+    box-sizing: border-box;
+    }
+
+    #searchBtn {
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    background-color: #4e6bff;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+    }
+
+    #searchBtn:hover {
+    background-color: #3b54d1;
+    }
+
+  </style>
+</head>
+<body>
+
+<h1>📚 도서 입력, 추천, 검색 시스템</h1>
+
+<!-- 도서 검색 영역 -->
+<div class="search-area">
+  <input type="text" id="searchInput" placeholder="제목 또는 저자명으로 검색" />
+  <button id="searchBtn">검색</button>
+</div>
+
+<!-- 검색 결과 출력 -->
+<div class="output" id="searchResults"></div>
+
+<form id="bookForm">
+  <label>제목</label>
+  <input type="text" id="title" required>
+
+  <label>저자</label>
+  <input type="text" id="author" required>
+
+  <label>가격</label>
+  <input type="number" id="price" required>
+
+  <label>재고</label>
+  <input type="number" id="stock" required>
+
+  <label>카테고리</label>
+  <!--required: 사용자가 반드시 값을 선택해야 함을 의미. 안쓰면 자동으로 경고-->
+  <select id="category" required> 
+    <option value="프로그래밍">프로그래밍</option>
+    <option value="경제">경제</option>
+    <option value="소설">소설</option>
+    <option value="기타">기타</option>
+  </select>
+
+  <button type="submit">도서 등록</button>
+</form>
+
+<div class="output" id="currentBook">
+  <!-- 등록된 도서 출력 -->
+</div>
+
+<div class="output" id="relatedBooks">
+  <!-- 같은 카테고리 도서 출력 -->
+</div>
+
+<div class="output" id="bestsellers">
+  <!-- 베스트셀러 도서 출력 -->
+</div>
+
+<!-- 전체 도서 목록 영역 -->
+<div class="list-and-sort" style="display: flex; gap: 20px; margin-top: 20px;">
+    <!-- 전체 도서 목록이 여기 출력됩니다 -->
+</div> 
+
+
+<script>
+  let books = [];
+
+  const saved = localStorage.getItem('books');
+  if (saved) {
+    books = JSON.parse(saved);
+  } else {
+    books = [
+      { title: "자바스크립트 완벽 가이드", author: "David Flanagan", price: 35000, stock: 5, category: "프로그래밍" },
+      { title: "모던 자바스크립트 Deep Dive", author: "이웅모", price: 40000, stock: 0, category: "프로그래밍" },
+      { title: "돈의 심리학", author: "모건 하우절", price: 18000, stock: 3, category: "경제" },
+      { title: "불편한 편의점", author: "김호연", price: 14500, stock: 2, category: "소설" },
+      { title: "역행자", author: "자청", price: 17500, stock: 10, category: "기타", bestseller: true, img: "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9788901272580.jpg" },
+      { title: "트렌드 코리아 2024", author: "김난도 외", price: 19800, stock: 10, category: "기타", bestseller: true, img: "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9788959897179.jpg" },
+      { title: "불편한 편의점 2", author: "김호연", price: 14500, stock: 5, category: "소설", bestseller: true, img: "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791161571188.jpg" },
+      { title: "세이노의 가르침", author: "세이노", price: 6480, stock: 20, category: "기타", bestseller: true, img: "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791168473690.jpg" },
+      { title: "도둑맞은 집중력", author: "요한 하리", price: 17820, stock: 8, category: "기타", bestseller: true, img: "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791167740984.jpg" }
+    ];
+  }
+
+   function saveBooks() {
+    localStorage.setItem('books', JSON.stringify(books));
+  }
+  // 도서 등록 폼에 이벤트 리스너를 추가
+  // element.addEventListener(eventType, callbackFunction);
+  //eventType="click", "submit", "keydown" 등, 감지할 이벤트의 종류
+  //callbackFunction=이벤트가 발생했을 때 실행할 함수 (직접 정의하거나 함수 이름 전달)
+  document.getElementById('bookForm').addEventListener('submit', function(event) {
+    // 폼 제출 시 페이지 새로고침을 막음
+    event.preventDefault();
+    // 입력된 값들을 가져옴 (앞뒤 공백 제거)
+    const title = document.getElementById('title').value.trim();
+    const author = document.getElementById('author').value.trim();
+    const price = parseInt(document.getElementById('price').value); // 가격 (정수로 변환)
+    const stock = parseInt(document.getElementById('stock').value); // 재고 (정수로 변환)
+    const category = document.getElementById('category').value;
+
+    // 모든 필드가 제대로 입력되었는지 확인
+    if (!title || !author || isNaN(price) || isNaN(stock)) {
+      alert("모든 필드를 정확히 입력해주세요."); // 입력 누락 또는 숫자 오류 시 경고
+      return;
+    }
+
+    const newBook = { title, author, price, stock, category }; // 도서 객체를 생성
+    books.push(newBook); // 생성한 도서를 books 배열에 추가
+    saveBooks(); // 저장 추가
+
+    showCurrentBook(newBook); // 현재 입력된 도서를 상단에 보여주는 함수 호출
+    showRelatedBooks(newBook.category, newBook);  // 같은 카테고리의 다른 도서를 추천 목록으로 보여주는 함수 호출
+    this.reset(); // 폼 입력 내용 초기화
+  });
+
+  // 입력한 도서 정보를 화면에 출력하는 함수
+  function showCurrentBook(book) {
+    const div = document.getElementById('currentBook'); // 출력할 위치 지정
+    // 도서 정보를 HTML 형식으로 구성해서 출력
+    div.innerHTML = `
+      <h2>📌 입력한 도서 정보</h2>
+      <div class="book-item">
+        <strong>제목:</strong> ${book.title}<br>
+        <strong>저자:</strong> ${book.author}<br>
+        <strong>가격:</strong> ${book.price.toLocaleString()}원<br>
+        <strong>재고:</strong> ${book.stock}권<br>
+        <strong>카테고리:</strong> ${book.category}
+      </div>
+    `;
+  }
+
+  // 같은 카테고리에 속한 다른 도서들을 추천 목록으로 출력하는 함수
+  function showRelatedBooks(category, excludeBook) {
+    const div = document.getElementById('relatedBooks');
+    // 입력한 도서를 제외하고, 같은 카테고리에 속한 도서들만 필터링
+    const related = books.filter(book => book.category === category && book !== excludeBook);
+
+    // 같은 카테고리 도서가 없을 경우 메시지 표시
+    if (related.length === 0) {
+      div.innerHTML = `<h2>🔍 같은 카테고리 도서</h2><p>같은 카테고리의 다른 도서가 없습니다.</p>`;
+      return;
+    }
+
+    // 같은 카테고리 도서가 있을 경우, 제목과 정보 출력
+    div.innerHTML = `<h2>🔍 같은 카테고리 도서 (${category})</h2>`;
+
+    // 각 도서를 반복하며 화면에 표시
+    related.forEach(book => {
+      const item = document.createElement('div');
+      item.className = 'book-item';
+      item.innerHTML = `
+        <strong>제목:</strong> ${book.title}<br>
+        <strong>저자:</strong> ${book.author}<br>
+        <strong>가격:</strong> ${book.price.toLocaleString()}원<br>
+        <strong>재고:</strong> ${book.stock}권
+      `;
+      div.appendChild(item); // 추천 도서 리스트에 추가
+
+    });
+    // 베스트셀러 출력도 함께 실행
+    showBestsellers();
+  }
+
+   // 베스트셀러 도서 출력 함수
+  function showBestsellers() {
+    const div = document.getElementById('bestsellers');
+    const bestsellers = books.filter(book => book.bestseller);
+
+    div.innerHTML = `<h2>🔥 작년도 베스트셀러</h2>`;
+
+    bestsellers.forEach(book => {
+      const item = document.createElement('div');
+      item.className = 'book-item';
+      item.style.display = 'flex';
+      item.style.alignItems = 'center';
+      item.style.gap = '15px';
+
+      item.innerHTML = `
+        <img src="${book.img}" alt="${book.title}" style="width: 80px; height: 100px; object-fit: cover; border-radius: 4px;">
+        <div>
+          <strong>제목:</strong> ${book.title}<br>
+          <strong>저자:</strong> ${book.author}<br>
+          <strong>가격:</strong> ${book.price.toLocaleString()}원
+        </div>
+      `;
+      div.appendChild(item);
+    });
+  }
+
+ function deleteBook(title) {
+    books = books.filter(book => book.title !== title);
+    saveBooks();
+    alert("도서가 삭제되었습니다.");
+    location.reload(); // 간단히 새로고침하여 UI 갱신
+  }
+
+   document.getElementById('searchBtn').addEventListener('click', () => {
+    const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
+    const results = books.filter(book => 
+      book.title.toLowerCase().includes(keyword) || book.author.toLowerCase().includes(keyword)
+    );
+
+    const resultDiv = document.getElementById('searchResults');
+    if (results.length === 0) {
+      resultDiv.innerHTML = "<p>검색 결과가 없습니다.</p>";
+      return;
+    }
+
+    resultDiv.innerHTML = "<h2>🔎 검색 결과</h2>";
+    results.forEach(book => {
+      const item = document.createElement('div');
+      item.className = 'book-item';
+      item.innerHTML = generateBookHTML(book);
+      resultDiv.appendChild(item);
+    });
+  });
+
+
+  document.getElementById('searchBtn').addEventListener('click', () => {
+    const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
+    const results = books.filter(book => 
+        book.title.toLowerCase().includes(keyword) || book.author.toLowerCase().includes(keyword)
+    );
+
+    const resultDiv = document.getElementById('searchResults');
+    if(results.length === 0) {
+        resultDiv.innerHTML = "<p>검색 결과가 없습니다.</p>";
+        return;
+    }
+
+    resultDiv.innerHTML = "<h2>🔎 검색 결과</h2>";
+    results.forEach(book => {
+        const item = document.createElement('div');
+        item.className = 'book-item';
+        item.innerHTML = `
+        <strong>제목:</strong> ${book.title}<br>
+        <strong>저자:</strong> ${book.author}<br>
+        <strong>가격:</strong> ${book.price.toLocaleString()}원<br>
+        <strong>재고:</strong> ${book.stock}권
+        `;
+        resultDiv.appendChild(item);
+    });
+   });
+
+
+  // 전체 도서 리스트를 화면에 출력하는 함수 추가
+  function showAllBooks() {
+  const resultDiv = document.getElementById('searchResults');
+  if (books.length === 0) {
+    resultDiv.innerHTML = "<p>등록된 도서가 없습니다.</p>";
+    return;
+  }
+   resultDiv.innerHTML = "<h2>📚 전체 도서 목록</h2>";
+  books.forEach(book => {
+    const item = document.createElement('div');
+    item.className = 'book-item';
+    item.innerHTML = `
+      <strong>제목:</strong> ${book.title}<br>
+      <strong>저자:</strong> ${book.author}<br>
+      <strong>가격:</strong> ${book.price.toLocaleString()}원<br>
+      <strong>재고:</strong> ${book.stock}권<br>
+      <strong>카테고리:</strong> ${book.category}
+    `;
+    resultDiv.appendChild(item);
+  });
+}
+  
+// 페이지가 처음 로딩될 때 베스트셀러 표시 + 전체 도서 목록 출력
+window.onload = () => {
+  showBestsellers();
+  showAllBooks();
+};
+</script>
+
+</body>
+</html>

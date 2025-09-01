@@ -1,0 +1,111 @@
+body {
+  font-family: "Smooch Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #198754;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+main {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid; /* 전체 메인 콘텐츠를 그리드로 구성 */
+  gap: 40px;
+}
+
+/* 유지되는 Flexbox 구조 */
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* 박스 스타일 */
+.box {
+  flex: 1;
+  min-width: 300px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+
+  display: grid; /* 내부 콘텐츠도 그리드로 정렬 */
+  gap: 15px;
+}
+
+/* 프로필 이미지 중앙 정렬 */
+.profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 링크 버튼 그리드로 구성 */
+.link-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.link-buttons a {
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid #007bff;
+  color: #007bff;
+  border-radius: 5px;
+}
+
+.link-buttons a.success {
+  border-color: #198754;
+  color: #198754;
+}
+
+/* 미디어 요소 */
+iframe,
+audio {
+  width: 100%;
+  border: none;
+}
+
+/* 폼을 그리드로 구성 */
+form {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+label {
+  margin-top: 10px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 15px 0;
+  margin-top: 50px;
+}
